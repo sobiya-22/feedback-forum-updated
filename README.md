@@ -2,24 +2,29 @@
 
 Feedback Forum is an online complaint registration platform designed to transform the traditional offline management of complaints into an efficient and user-friendly digital system. Tailored for colleges, this website streamlines the process of gathering, managing, and resolving complaints and feedback from students and faculty members.
 
+
 ## Key Features
-Streamlined Complaint Management: Provides a structured approach to registering, tracking, and resolving complaints, ensuring all issues are addressed promptly.
 
-Transparency in Administration: Maintains a transparent workflow by allowing users to monitor the status of their complaints, fostering trust and accountability.
 
-Improved Communication: Bridges the communication gap between students, faculty, and administrative staff by providing a centralized platform.
+**Streamlined Complaint Management:** Provides a structured approach to registering, tracking, and resolving complaints, ensuring all issues are addressed promptly.
 
-Quick Resolution: Speeds up the resolution process by categorizing and routing complaints to the relevant authorities efficiently.
+**Transparency in Administration:** Maintains a transparent workflow by allowing users to monitor the status of their complaints, fostering trust and accountability.
 
-User Roles: Differentiates between students, faculty, and administrators, ensuring a role-specific interface and functionalities.
+**Improved Communication:** Bridges the communication gap between students, faculty, and administrative staff by providing a centralized platform.
+
+**Quick Resolution:** Speeds up the resolution process by categorizing and routing complaints to the relevant authorities efficiently.
+
+**User Roles:** Differentiates between students, faculty, and administrators, ensuring a role-specific interface and functionalities.
 
 ### Tech Stack
+
 
 ```
 Frontend: HTML5, CSS3, JavaScript
 Backend: Firebase Firestone Database
 Storage of Attachments: Cloudinary
 ```
+
 
 ### Benefits
 
@@ -32,12 +37,20 @@ Storage of Attachments: Cloudinary
 
 ```
 npm install cloudinary
+
 Live Server in VSCode
 ```
+* Setup your firebase firestone project
+* Create an account at cloudinary and get the required API,Presets,etc
+
 
 ## License
 
+
 This project is licensed under the GNU GENERAL PUBLIC LICENSE- see the [LICENSE.md](LICENSE.md) file for details
+
+
+
 
 
 
