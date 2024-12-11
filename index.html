@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link rel="stylesheet" href="stylesheets/signupLogin.css">
+    <link rel="stylesheet" href="utilities/loader/loader.css">
+    <title>Feedback Forum</title>
+</head>
+
+<body>
+    <nav  id="home">
+        <img class="logo" src="images/feedback.png" alt="feedback-forum-img">
+        <ul>
+            <li><a href="signupLogin.html#login">Login</a></li>
+            <li><a href="signupLogin.html#signup">Sign Up</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>        
+    </nav>
+    <section class="home" id="home">
+        <div class="text">
+            <div class="main-title">
+                <p class="title" id="title">Feedback Forum</p>
+            </div>
+            <p class="subtitle">Your Opinion Has Been Heard - We're on It! <br> Empowering Students, Transforming Campus - Your Feedback, Our Action!</p>
+            <a class="get-started-btn" href="signupLogin.html">Get Started!</a>
+        </div>
+        <div>
+            <img class="homepage-img" src="images/homepg-img.svg" alt="homepageImg">
+        </div>
+
+    </section>
+    <div class="services" id="services">
+        <div class="service-headline">
+            We have so much to offer you!
+        </div>
+        <div class="service-cards">
+            <div class="service-card">
+                <img src="images/feedbackSubmission.gif" alt="" class="service-img">
+                <p>Feedback Submission</p>
+                <div>
+                    Easily share your opinions, suggestions, and 
+                    concerns about any aspect of college life,
+                    from academics to extracurriculars.
+                     We're here to listen and improve!
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="images/anonymousFeedback.gif" alt="" class="service-img">
+                <p>Anonymous Feedback</p>
+                <div>
+                    Feel free to voice your honest opinions 
+                    without revealing your identity.
+                     Your feedback remains confidential 
+                     and impactful.
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="images/update.gif" alt="" class="service-img">
+                <p>Real-Time Updates</p>
+                <div>
+                    Stay informed about the status of 
+                    your feedback as it progresses 
+                    through review and resolution 
+                    stages. We believe in transparency
+                     and action!
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="images/categoryWise.gif" alt="" class="service-img">
+                <p>Category-Based Feedback</p>
+                <div>
+                    Organize your thoughts by selecting
+                     relevant categories such as 
+                     Academics, Facilities, Canteen,
+                      Events, or Campus Environment 
+                      for faster resolution.
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="images/adminDash.gif" alt="" class="service-img">
+                <p>Admin Dashboard</p>
+                <div>
+                    Dedicated for the college administration 
+                    to manage, review, and resolve student 
+                    feedback efficiently. Your concerns are our 
+                    priority!
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- loading function -->
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>    
+    <footer>
+        <div class="footer-content">
+            <ul class="social-icons">
+                <li id="instagram"><i class="fi fi-brands-instagram"></i></li>
+                <li id="linkedin"><i class="fi fi-brands-linkedin"></i></li>
+                <li id="github"><i class="fi fi-brands-github"></i></li>
+            </ul>
+            <ul class="menu-list">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="">About Us</a></li>
+                <li><a href="">Contact Us</a></li>
+            </ul>
+            <p>© 2024 Feedback Forum | All rights reserved</p>
+        </div>
+        
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore-compat.js"></script>
+    <script type="module" src="utilities/loader/loader.js"></script>
+    <script type="module" src="scripts/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/user.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+    <title>User</title>
+</head>
+
+<body>
+    <nav>
+        <img class="logo" src="images/feedback.png" alt="feedback-forum-img">
+        <div class="heading">
+            <p class="add-feedback">Add your Feedback!</p>
+        </div>
+        <!-- <p class="user-type"></p> -->
+        <!-- <p class="loggedUser-name"></p> -->
+    </nav>
+    <section class="container">
+        <div class="sidebar">
+            <div class="user-details">
+                <div class="side-elements">
+                </div>
+                <div class="user-role">
+                    <i class="fi fi-ss-user-key"></i>
+                    <p class="user-role"></p>
+                </div>
+            </div>
+            
+            <div class="logout">
+                <i class="fi fi-br-sign-out-alt"></i>
+                <p class="logout-btn">Logout</p>
+            </div>
+        </div>
+        <div class="complaint-form">
+            <div class="complaint-heading">
+                <p>Tell Us more about your issue...</p>
+            </div>
+            <div class="complaint-description">
+                <p>Complaint Category: 
+                    <select name="Complaint type" id="domain" class="js-type" required>
+                        <option value="" id="select" selected disabled>--Select a Complaint Authority--</option>
+                        <option value="Academics">Academics</option>
+                        <option value="Administrative">Administrative(Management)</option>
+                        <option value="Canteen">Canteen</option>
+                        <option value="GymKhana">GymKhana</option>
+                        <option value="Hostel">Hostel</option>
+                        <option value="Hygiene">Hygiene</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Grievances">Grievances(Suggestions)</option>
+                    </select>
+                </p>
+                <p>Title of the Complaint:   <input class="js-title-complaint" name="title" id="title" required></input></p>
+                <p>Describe your Complaint: <input class="js-complaint" name="write" id="write" cols="60" rows="10" minlength="200" required></input></p>
+                <p for="imageUpload">Attachments: </p>
+                <input type="file" class="js-imageUpload" id="imageUpload" name="imageUpload" accept="image/*">
+                <p class="anonymity">Keep my identity anonymous<input type="checkbox" class="js-anonymity" id="anonymity" name="anonymity"></p>
+                <div class="submit-btn">
+                    <button class="js-submit" type="submit">Submit</button>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+</body>
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+<script type="module" src="scripts/user.js"></script>
+
+</html>

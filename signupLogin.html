@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/signupLogin.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <nav>
+        <img class="logo" src="images/feedback.png" alt="feedback-forum-img">
+    </nav>
+    <div class="container">
+        <img src="images/login.gif" alt="">
+        <div class="flip-card">
+            <div class="flip-card-inner" id="flipCard">
+                <!-- Front Side: Login -->
+                <div class="flip-card-front">
+                    <div class="login-form">
+                        <form>
+                            <div class="form">
+                                <p>Login Now!</p>
+                                <input type="email" placeholder="Enter your email" id="f-email" required>
+                                <input type="password" placeholder="Enter your password" id="f-password" required>
+                                <button class="login-btn" type="submit">Login</button>
+                            </div>
+                        </form>
+                        <p>Don't have an account? <a href="#" id="flipToSignup">Sign Up Now</a></p>
+                    </div>
+                </div>
+
+                <!-- Back Side: Signup -->
+                <div class="flip-card-back">
+                    <div class="login-form">
+                        <form>
+                            <!-- Basic Details -->
+                            <div class="form" id="step1">
+                                <p>Sign Up Here!</p>
+                                <input type="text" placeholder="Enter your name" id="name" required>
+                                <input type="email" placeholder="Enter your email" id="email" required>
+                                <select id="role" required>
+                                    <option value="" disabled selected>Select your role</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Faculty">Faculty</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Authority">Authority</option>
+                                </select>
+                                <button class="login-btn" id="nextBtn" type="button">Next</button>
+                            </div>
+
+                            <!-- Additional Details -->
+                            <div class="form" id="step2" style="display: none;">
+                                <p><i class="fi fi-br-angle-small-left" id="back-btn"></i> Sign Up Here!</p>
+                                <div id="authorityDropdown" style="display: none;">
+                                    <select id="authority" required>
+                                        <option value="" disabled selected>Select your authority</option>
+                                        <option value="Canteen">Canteen</option>
+                                        <option value="Administration">Administration</option>
+                                        <option value="Personal">Personal/Grievances</option>
+                                        <option value="Hostel">Hostel</option>
+                                        <option value="Gymkhana">GymKhana</option>
+                                        <option value="Hygiene">Hygiene</option>
+                                        <option value="Personal">Personal</option>
+                                        <option value="Grievances">Grievances (Suggestions)</option>
+                                    </select>
+                                </div>
+                                <input type="password" placeholder="Create a password" id="password" required>
+                                <input type="password" placeholder="Confirm your password" id="confirmPassword"
+                                    required>
+                                <button class="login-btn" id="signUpBtn" type="submit">Sign Up</button>
+                            </div>
+                            <p>Already have an account?<a id="flipToLogin" href="#"> Login Now!</a></p>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script type="module" src="scripts/signupLogin.js"></script>
+    <script type="module" src="scripts/firebase.js"></script>
+</body>
+
+</html>
