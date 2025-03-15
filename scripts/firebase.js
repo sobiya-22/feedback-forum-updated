@@ -1,7 +1,9 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
 import { getFirestore, collection, addDoc, getDocs,doc,updateDoc  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js';
-import {query, where} from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+import {orderBy,query, where} from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+// import { orderBy} from "firebase/firestore";
+
 // Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBoVCcjL3OjhPGJ39DWrucGiCUeV_QRWDo",
@@ -44,7 +46,17 @@ export async function verifyUser(user) {
     }
     return null;
 }
-
+//get user details from provided email
+export async function getUserWithEmail(email) {
+    const querySnapshot = await getDocs(collection(db, 'users'));
+    for (const doc of querySnapshot.docs) {
+        const data = doc.data();
+        if (email === data.email ) {
+            return data;
+        }
+    }
+    return null;
+}
 // Function to add complaint
 export async function addComplaint(complaintData) {
     try {
@@ -67,7 +79,9 @@ export async function addComplaint(complaintData) {
 
 // Function to read all complaints
 export async function readAllComplaints() {
-    const querySnapshot = await getDocs(collection(db, 'complaints'));
+    // const querySnapshot = await getDocs(collection(db, 'complaints'));
+    const q = query(collection(db, "complaints"), orderBy("date", "desc"));
+    const querySnapshot = await getDocs(q);
     return querySnapshot.docs;
 }
 
@@ -83,10 +97,10 @@ export async function getComplaintDetails(cid) {
     return null;
 }
 
-//send authroity
+//send authority
 // Function to update the status of a complaint by CID
 export async function changeStatus(cid, status) {
-    const q = query(collection(db, 'complaints'), where('cid', '==', cid));
+    const q = query(collection(db, 'complaints'), where('complaintID', '==', cid));
 
     const querySnapshot = await getDocs(q);
 
@@ -101,7 +115,7 @@ export async function changeStatus(cid, status) {
             }
         });
     } else {
-        console.error(`No complaints found with CID: ${cid}`);
+        console.error(`No complaints found with CID: ${cid} and ${doc.id}`);
     }
 }
 

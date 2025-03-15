@@ -74,3 +74,16 @@ if (compImgInput.files.length > 0) {
     addComplaint(complaintData);
     console.log('Complaint submitted! Complaint ID: '+complaintID);
 });
+
+//a popup when complaint is submitted!
+const submitBtn = document.querySelector('.js-submit');
+submitBtn.addEventListener('click', () => {
+    // alert('complaint submitted!');
+    document.getElementById('js-popup').style.display = 'flex';
+    
+});
+
+const greatBtn = document.querySelector('.close-submit-popup');
+greatBtn.addEventListener('click', () => {
+    document.getElementById('js-popup').style.display = 'none';
+});

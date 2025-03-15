@@ -53,7 +53,7 @@ nextBtn.addEventListener("click", (e) => {
 
     step1.style.display = "none";
     step2.style.display = "block";
-    if (roleInput.value === "authority") {
+    if (roleInput.value === "Authority") {
         authorityDropdown.style.display = "block";
     } else {
         authorityDropdown.style.display = "none";
@@ -64,7 +64,7 @@ nextBtn.addEventListener("click", (e) => {
 signUpBtn.addEventListener("click", async(e) => {
     e.preventDefault();
 
-    if (roleInput.value === "authority" && !authorityInput.value) {
+    if (roleInput.value === "Authority" && !authorityInput.value) {
         alert("Please select an authority type.");
         return;
     }
@@ -78,7 +78,7 @@ signUpBtn.addEventListener("click", async(e) => {
         name: nameInput.value,
         password: passwordInput.value,
         role: roleInput.value,
-        authority: roleInput.value === "authority" ? authorityInput.value : null
+        authority: roleInput.value === "Authority" ? authorityInput.value : null
     };
     try {
         await addUsers(newUser);
@@ -96,7 +96,7 @@ signUpBtn.addEventListener("click", async(e) => {
 const login_email = document.getElementById('f-email');
 const login_password = document.getElementById('f-password');
 
-document.querySelector('.login-btn').addEventListener('click', async (e) => {
+document.querySelector('.flip-card-front .login-btn').addEventListener('click', async (e) => {
     e.preventDefault();
     const loginUser = {
         email: login_email.value,
@@ -107,10 +107,10 @@ document.querySelector('.login-btn').addEventListener('click', async (e) => {
         alert("Login successful! Redirecting...");
         sessionStorage.setItem('loggeduserdata', JSON.stringify(loggedUser));
         if (loggedUser.role === 'Student' || loggedUser.role === 'Faculty') {
-            window.location.href = '../user.html';
+            window.location.href = './user.html';
         }
         else if(loggedUser.role === 'Authority' || loggedUser.role === 'Admin'){
-            window.location.href = '../resolver.html';
+            window.location.href = './resolver.html';
         }
     } else {
         alert('Invalid Email or Password. Try Again!');

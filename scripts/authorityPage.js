@@ -18,12 +18,15 @@ if (!data) {
 document.querySelector('.user-details .side-elements').innerHTML +=
     `
         <p> ${data.email}</p>`;
-
-document.querySelector('.user-details .user-role').innerHTML +=
-    `
-            <p>${data.role}</p>`;
-
-document.querySelector('.authority-type').innerHTML = data.role;
+if (data.role) {
+    document.querySelector('.user-details .user-role').innerHTML +=
+        `<p>${data.authorityType}</p>`
+}
+else {
+    document.querySelector('.user-details .user-role').innerHTML +=
+        `<p>${data.role}</p>`;
+}
+document.querySelector('.authority-type').innerHTML = data.authorityType;
 
 //Logout button
 const logoutbutton = document.querySelector('.logout');
