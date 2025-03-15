@@ -107,7 +107,7 @@ document.querySelector('.login-btn').addEventListener('click', async (e) => {
         alert("Login successful! Redirecting...");
         sessionStorage.setItem('loggeduserdata', JSON.stringify(loggedUser));
         if (loggedUser.role === 'Student' || loggedUser.role === 'Faculty') {
-            window.location.href = '../user.html';
+            window.location.href = './user.html';
         }
         else if(loggedUser.role === 'Authority' || loggedUser.role === 'Admin'){
             window.location.href = '../resolver.html';
