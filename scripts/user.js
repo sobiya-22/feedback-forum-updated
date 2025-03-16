@@ -4,6 +4,7 @@ import { uploadImageToCloudinary } from './utils/cloudinary.js';
 import { generateRandomNumber } from "./utils/generateComplaintID.js";
 import { eachUserComplaints } from './firebase.js';
 import { getComplaintDetails } from "./firebase.js";
+import { sendComplaintAddedEmail } from "./utils/sendEmail.js";
 // Verifying the user
 authenticate();
 
@@ -28,7 +29,7 @@ if (data) {
 
 //Logout button
 const logoutbutton = document.querySelector('.logout');
-logoutbutton.addEventListener(('click') , ()=> {
+logoutbutton.addEventListener(('click'), () => {
     sessionStorage.removeItem('loggeduserdata');
     window.location.reload();
 });
@@ -36,54 +37,49 @@ logoutbutton.addEventListener(('click') , ()=> {
 
 //adding complaint to the database
 const compSubmit = document.querySelector('.js-submit');
-compSubmit.addEventListener('click', async() => {
-const compCategoryInput = document.querySelector('.js-type').value;
-const compTitleInput = document.querySelector('.js-title-complaint').value;
-const compDescInput = document.querySelector('.js-complaint').value;
-const compImgInput = document.querySelector('#imageUpload');
-const compAnonymousInput = document.querySelector('.js-anonymity').checked;
-const userEmail = data.email;
-const complaintID = generateRandomNumber();
-//date when the complaint is registered 
-let now = new Date();
-// Format the date
-let formattedDate = now.toLocaleDateString('en-GB', {
-  day: 'numeric',
-  month: 'numeric',
-  year: 'numeric'
-});
-const compDate = formattedDate;
-//image uploding to the cloudinary storage adn getting the url to add to firebase
-let ImgURL=null;
-if (compImgInput.files.length > 0) {
-    ImgURL = await uploadImageToCloudinary(compImgInput.files[0]);
-}
-    let complaintData = {
-    complaintID: complaintID,
-    category: compCategoryInput,
-    title: compTitleInput,
-    description: compDescInput,
-    attachmentURL: ImgURL,
-    anonymous: compAnonymousInput,
-    userEmail: userEmail,
-    date: compDate,
-    status: 'Not Resolved'
-};
+compSubmit.addEventListener('click', async () => {
+    const compCategoryInput = document.querySelector('.js-type').value;
+    const compTitleInput = document.querySelector('.js-title-complaint').value;
+    const compDescInput = document.querySelector('.js-complaint').value;
+    const compImgInput = document.querySelector('#imageUpload');
+    const compAnonymousInput = document.querySelector('.js-anonymity').checked;
+    const userEmail = data.email;
+    const complaintID = generateRandomNumber();
+    //date when the complaint is registered 
+    let now = new Date();
+    // Format the date
+    let formattedDate = now.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric'
+    });
+    const compDate = formattedDate;
+    //image uploding to the cloudinary storage adn getting the url to add to firebase
+    let ImgURL = null;
+    if (compImgInput.files.length > 0) {
+        ImgURL = await uploadImageToCloudinary(compImgInput.files[0]);
+    }
+    const complaintData = {
+        complaintID: complaintID,
+        category: compCategoryInput,
+        title: compTitleInput,
+        description: compDescInput,
+        attachmentURL: ImgURL,
+        anonymous: compAnonymousInput,
+        userEmail: userEmail,
+        date: compDate,
+        status: 'Not Resolved'
+    };
     if (!compCategoryInput || !compTitleInput || !compDescInput) {
         alert('Please fill in all required fields: Complaint Type, Title, and Complaint.');
         return;
     }
     addComplaint(complaintData);
-    console.log('Complaint submitted! Complaint ID: '+complaintID);
+    console.log('Complaint submitted! Complaint ID: ' + complaintID);
+    await sendComplaintAddedEmail(data.name, data.email, complaintData);
+    document.getElementById('js-popup').style.display = 'flex';
 });
 
-//a popup when complaint is submitted!
-const submitBtn = document.querySelector('.js-submit');
-submitBtn.addEventListener('click', () => {
-    // alert('complaint submitted!');
-    document.getElementById('js-popup').style.display = 'flex';
-    
-});
 
 const greatBtn = document.querySelector('.close-submit-popup');
 greatBtn.addEventListener('click', () => {
@@ -94,13 +90,13 @@ greatBtn.addEventListener('click', () => {
 //view complaints js
 //my complaints 
 document.querySelector('#my-complaints').addEventListener('click', async () => {
-    
+
     const rows = document.querySelector(".complaint-list .main-table .body");
     const complaintHeading = document.querySelector('.complaint-heading-top .complaint-heading');
     complaintHeading.innerHTML = 'My Complaints';
     document.querySelector('.complaint-form').style.display = 'none';
     document.querySelector('.complaint-box').style.display = 'block';
-    
+
     let retrievedComplaints = await eachUserComplaints(data.email);
     let newrows = '';
     retrievedComplaints.forEach((doc) => {
@@ -121,7 +117,7 @@ document.querySelector('#my-complaints').addEventListener('click', async () => {
 document.querySelector('#add-complaint').addEventListener('click', () => {
     document.querySelector('.complaint-box').style.display = 'none';
     document.querySelector('.complaint-form').style.display = 'block';
-    
+
 });
 
 //for resolved complaints
@@ -143,9 +139,9 @@ document.querySelector('#resolved-complaints').addEventListener('click', async (
             <td>${each.status}</td> 
             <td><button class="view-details">View</button></td>
             </tr>`;
-        newrows += newRow;
+            newrows += newRow;
         }
-        
+
     });
     rows.innerHTML = newrows;
 });
@@ -162,7 +158,7 @@ document.querySelector(".complaint-list .main-table .body").addEventListener("cl
 
         const cid = row.cells[0].innerText;
         const complaintInfo = await getComplaintDetails(cid);
-         
+
 
         const imageButton = complaintInfo.imageURL
             ? `<button id='open-popup' class='image-view'>View Image</button>`

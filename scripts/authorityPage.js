@@ -3,6 +3,7 @@ import { readAllComplaints } from "./firebase.js";
 import { getComplaintDetails } from "./firebase.js";
 import { changeStatus } from "./firebase.js";
 import { getUserWithEmail } from "./firebase.js";
+import { resolvedComplaintUpdate } from "./utils/sendEmail.js";
 // Verifying the user
 authenticate();
 
@@ -129,7 +130,7 @@ document.querySelector(".complaint-list .main-table .body").addEventListener("cl
             greenBtn.addEventListener('click', async () => {
                 if (data.role === 'Authority') {
                     await changeStatus(cid, 'Resolved');
-
+                    await resolvedComplaintUpdate(complaintInfo.userEmail, cid, complaintInfo.category);
                     // Update the UI
                     document.querySelector('.status-change').innerHTML = 'Resolved';
                     greenBtn.innerHTML = 'Resolved';

@@ -1,5 +1,5 @@
 import { addUsers,verifyUser } from "./firebase.js";
-
+import { sendSignUpEmail } from './utils/sendEmail.js';
 //Showing cards
 document.addEventListener('DOMContentLoaded', () => {
     const flipCard = document.getElementById("flipCard");
@@ -82,6 +82,7 @@ signUpBtn.addEventListener("click", async(e) => {
     };
     try {
         await addUsers(newUser);
+        await sendSignUpEmail(emailInput.value, nameInput.value);
         alert("Signup successful! Form data submitted.");
     }
     catch (error) {

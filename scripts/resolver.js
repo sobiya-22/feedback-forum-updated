@@ -2,7 +2,7 @@ import { authenticate } from "./utils/auth-check.js";
 import { readAllComplaints } from "./firebase.js";
 import { getComplaintDetails } from "./firebase.js";
 import { changeStatus } from "./firebase.js";
-import { getUserWithEmail } from "./firebase.js";
+import { sendComplaintUpdate } from "./utils/sendEmail.js";
 // Verifying the user
 authenticate();
 
@@ -115,7 +115,7 @@ document.querySelector(".complaint-list .main-table .body").addEventListener("cl
         const greenBtn = document.querySelector('.send-discard-btn .green-btn');
 
         // **Disable button if status is already "Pending"**
-        if (complaintInfo.status === "Pending") {
+        if (complaintInfo.status === "Pending" || complaintInfo.status==='Resolved') {
             greenBtn.disabled = true;
             greenBtn.innerHTML = 'Sent to Authority';
             greenBtn.style.opacity = '0.8';
@@ -124,7 +124,7 @@ document.querySelector(".complaint-list .main-table .body").addEventListener("cl
             greenBtn.addEventListener('click', async () => {
                 if (data.role === 'Admin') {
                     await changeStatus(cid, 'Pending');
-
+                    sendComplaintUpdate(complaintInfo.userEmail, complaintInfo.status, cid, complaintInfo.category);
                     // Update the UI
                     document.querySelector('.status-change').innerHTML = 'Pending';
                     greenBtn.innerHTML = 'Sent to Authority';
