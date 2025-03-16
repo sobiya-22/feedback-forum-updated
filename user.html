@@ -29,6 +29,15 @@
                     <i class="fi fi-ss-user-key"></i>
                     <p class="user-role"></p>
                 </div>
+                <div class="complaint active">
+                    <p href=""  id="add-complaint">Add a complaint! </p>
+                </div>
+                <div class="complaint">
+                    <p href=""  id="my-complaints">My Complaints</p>
+                </div>
+                <div class="complaint">
+                    <p href="" id="resolved-complaints">Resolved complaints</p>
+                </div>
             </div>
             
             <div class="logout">
@@ -65,7 +74,49 @@
                 
             </div>
         </div>
+        <div class="complaint-box" style="display: none;">
+            <div class="complaint-heading-top">
+                <p class="complaint-heading">Heyya</p>
+            </div>
+            
+            <div class="complaint-list">
+                <table class="main-table">
+                    <thead class="header">
+                        <tr>
+                            <th id="t-complaint-id">Complaint ID</th>
+                            <th id="t-date">Date</th>
+                            <th id="t-category">Category</th>
+                            <th id="t-title">Title</th>
+                            <th id="t-status">Status</th>
+                            <th id="t-details">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody class="body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
+        <!-- view details button pop up -->
+    <div class="details-overlay" id="popup">
+        <div class="view-content">
+            <div class="top-line">
+                <span class="close-btn" id="close-btn">&times;</span>
+                <h2>Complaint Details</h2>
+            </div>
+            <div id="popup-details"></div>
+        </div>
+    </div>
+
+    <!-- Image popup structure -->
+    <div id="image-popup">
+        <button id="close-popup"></button>
+        <div id="popup-content">
+            <img src="" alt="Popup Image">
+        </div>
+    </div>
+
+    <!-- complaint submission popup -->
     <div class="submit-btn-popup" id='js-popup' style="display: none;">
         <h4>Complaint Submitted!</h4>
         <img src="./images/submitted.png" alt="">

@@ -20,13 +20,13 @@ document.querySelector('.user-details .side-elements').innerHTML +=
         <p> ${data.email}</p>`;
 if (data.role) {
     document.querySelector('.user-details .user-role').innerHTML +=
-        `<p>${data.authorityType}</p>`
+        `<p>${data.role} - ${data.authorityType}</p>`
 }
-else {
-    document.querySelector('.user-details .user-role').innerHTML +=
-        `<p>${data.role}</p>`;
-}
-document.querySelector('.authority-type').innerHTML = data.authorityType;
+// else {
+//     document.querySelector('.user-details .user-role').innerHTML +=
+//         `<p>${data.role}</p>`;
+// }
+document.querySelector('.authority-type').innerHTML +=data.authorityType;
 
 //Logout button
 const logoutbutton = document.querySelector('.logout');
@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     let newrows = '';
     retrievedComplaints.forEach((doc) => {
         const each = doc.data();
-        let newRow = ` <tr> 
+        if (each.category === data.authorityType &&( each.status === "Pending")) {
+            let newRow = ` <tr> 
             <td>${each.complaintID}</td> 
             <td>${each.userEmail}</td> 
             <td>${each.date}</td> 
@@ -51,7 +52,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <td>${each.title}</td> 
             <td><button class="view-details">View</button></td>
             </tr>`;
-        newrows += newRow;
+            newrows += newRow;
+        }
     });
     rows.innerHTML += newrows;
 });
@@ -83,7 +85,7 @@ document.querySelector(".complaint-list .main-table .body").addEventListener("cl
             <strong>Attachments: </strong> ${imageButton}<br>
             <strong>Status: </strong><span class="status-change">${complaintInfo.status}</span><br>
             <div class='send-discard-btn'>
-                <button class='green-btn'>Send Authority</button>
+                <button class='green-btn'>Resolve</button>
                 <button class='red-btn'>Discard</button>
             </div>
         `;
@@ -118,21 +120,21 @@ document.querySelector(".complaint-list .main-table .body").addEventListener("cl
         const greenBtn = document.querySelector('.send-discard-btn .green-btn');
 
         // **Disable button if status is already "Pending"**
-        if (complaintInfo.status === "Pending") {
+        if (complaintInfo.status === "Resolved") {
             greenBtn.disabled = true;
-            greenBtn.innerHTML = 'Sent to Authority';
-            greenBtn.style.opacity = '0.8';
+            greenBtn.innerHTML = 'Resolved!';
+            greenBtn.style.opacity = '0.9';
             greenBtn.style.cursor = 'not-allowed';
         } else {
             greenBtn.addEventListener('click', async () => {
-                if (data.role === 'Admin') {
-                    await changeStatus(cid, 'Pending');
+                if (data.role === 'Authority') {
+                    await changeStatus(cid, 'Resolved');
 
                     // Update the UI
-                    document.querySelector('.status-change').innerHTML = 'Pending';
-                    greenBtn.innerHTML = 'Sent to Authority';
+                    document.querySelector('.status-change').innerHTML = 'Resolved';
+                    greenBtn.innerHTML = 'Resolved';
                     greenBtn.disabled = true;
-                    greenBtn.style.opacity = '0.8';
+                    greenBtn.style.opacity = '0.9';
                     greenBtn.style.cursor = 'not-allowed';
                 }
             });
@@ -163,30 +165,7 @@ document.querySelector('#all-complaints').addEventListener('click', async () => 
     let newrows = '';
     retrievedComplaints.forEach((doc) => {
         const each = doc.data();
-        let newRow = ` <tr> 
-            <td>${each.complaintID}</td> 
-            <td>${each.userEmail}</td> 
-            <td>${each.date}</td> 
-            <td>${each.category}</td> 
-            <td>${each.title}</td> 
-            <td><button class="view-details">View</button></td>
-            </tr>`;
-        newrows += newRow;
-    });
-    rows.innerHTML += newrows;
-});
-
-//for pending complaints
-document.querySelector('#pending-complaints').addEventListener('click', async () => {
-    const complaintHeading = document.querySelector('.complaint-heading');
-    const rows = document.querySelector(".complaint-list .main-table .body");
-    complaintHeading.innerHTML = 'Pending Complaints';
-    let retrievedComplaints = await readAllComplaints();
-    let newrows = '';
-    rows.innerHTML = '';
-    retrievedComplaints.forEach((doc) => {
-        const each = doc.data();
-        if (each.status === 'Pending') {
+        if (each.category === data.authorityType && each.status ==='Pending') {
             let newRow = ` <tr> 
             <td>${each.complaintID}</td> 
             <td>${each.userEmail}</td> 
@@ -195,12 +174,37 @@ document.querySelector('#pending-complaints').addEventListener('click', async ()
             <td>${each.title}</td> 
             <td><button class="view-details">View</button></td>
             </tr>`;
-        newrows += newRow;
+            newrows += newRow;
         }
-        
     });
-    rows.innerHTML = newrows;
+    rows.innerHTML += newrows;
 });
+
+//for pending complaints
+// document.querySelector('#pending-complaints').addEventListener('click', async () => {
+//     const complaintHeading = document.querySelector('.complaint-heading');
+//     const rows = document.querySelector(".complaint-list .main-table .body");
+//     complaintHeading.innerHTML = 'Pending Complaints';
+//     let retrievedComplaints = await readAllComplaints();
+//     let newrows = '';
+//     rows.innerHTML = '';
+//     retrievedComplaints.forEach((doc) => {
+//         const each = doc.data();
+//         if (each.status === 'Pending' && each.category === data.authorityType) {
+//             let newRow = ` <tr> 
+//             <td>${each.complaintID}</td> 
+//             <td>${each.userEmail}</td> 
+//             <td>${each.date}</td> 
+//             <td>${each.category}</td> 
+//             <td>${each.title}</td> 
+//             <td><button class="view-details">View</button></td>
+//             </tr>`;
+//         newrows += newRow;
+//         }
+        
+//     });
+//     rows.innerHTML = newrows;
+// });
 
 //for resolved complaints
 document.querySelector('#resolved-complaints').addEventListener('click', async () => {
@@ -212,7 +216,7 @@ document.querySelector('#resolved-complaints').addEventListener('click', async (
     rows.innerHTML = '';
     retrievedComplaints.forEach((doc) => {
         const each = doc.data();
-        if (each.status === 'Resolved') {
+        if (each.status === 'Resolved' && each.category === data.authorityType) {
             let newRow = ` <tr> 
             <td>${each.complaintID}</td> 
             <td>${each.userEmail}</td> 

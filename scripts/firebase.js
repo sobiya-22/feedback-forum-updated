@@ -119,6 +119,14 @@ export async function changeStatus(cid, status) {
     }
 }
 
+//function to retrieve complaints of a specific user
+export async function eachUserComplaints(email) {
+    const q = query(collection(db, 'complaints'), where('userEmail', '==', email));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs;
+}
+
+
 
 
 

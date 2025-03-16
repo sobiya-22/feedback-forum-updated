@@ -2,6 +2,8 @@ import { authenticate } from "./utils/auth-check.js";
 import { addComplaint } from "./firebase.js";
 import { uploadImageToCloudinary } from './utils/cloudinary.js';
 import { generateRandomNumber } from "./utils/generateComplaintID.js";
+import { eachUserComplaints } from './firebase.js';
+import { getComplaintDetails } from "./firebase.js";
 // Verifying the user
 authenticate();
 
@@ -86,4 +88,153 @@ submitBtn.addEventListener('click', () => {
 const greatBtn = document.querySelector('.close-submit-popup');
 greatBtn.addEventListener('click', () => {
     document.getElementById('js-popup').style.display = 'none';
+});
+
+
+//view complaints js
+//my complaints 
+document.querySelector('#my-complaints').addEventListener('click', async () => {
+    
+    const rows = document.querySelector(".complaint-list .main-table .body");
+    const complaintHeading = document.querySelector('.complaint-heading-top .complaint-heading');
+    complaintHeading.innerHTML = 'My Complaints';
+    document.querySelector('.complaint-form').style.display = 'none';
+    document.querySelector('.complaint-box').style.display = 'block';
+    
+    let retrievedComplaints = await eachUserComplaints(data.email);
+    let newrows = '';
+    retrievedComplaints.forEach((doc) => {
+        const each = doc.data();
+        let newRow = ` <tr> 
+            <td>${each.complaintID}</td>  
+            <td>${each.date}</td> 
+            <td>${each.category}</td> 
+            <td>${each.title}</td> 
+            <td>${each.status}</td>
+            <td><button class="view-details">View</button></td>
+            </tr>`;
+        newrows += newRow;
+    });
+    rows.innerHTML += newrows;
+});
+//for opening the form again
+document.querySelector('#add-complaint').addEventListener('click', () => {
+    document.querySelector('.complaint-box').style.display = 'none';
+    document.querySelector('.complaint-form').style.display = 'block';
+    
+});
+
+//for resolved complaints
+document.querySelector('#resolved-complaints').addEventListener('click', async () => {
+    const complaintHeading = document.querySelector('.complaint-heading-top .complaint-heading');
+    const rows = document.querySelector(".complaint-list .main-table .body");
+    complaintHeading.innerHTML = 'Resolved Complaints';
+    let retrievedComplaints = await eachUserComplaints(data.email);
+    let newrows = '';
+    rows.innerHTML = '';
+    retrievedComplaints.forEach((doc) => {
+        const each = doc.data();
+        if (each.status === 'Resolved') {
+            let newRow = ` <tr> 
+            <td>${each.complaintID}</td>  
+            <td>${each.date}</td> 
+            <td>${each.category}</td> 
+            <td>${each.title}</td> 
+            <td>${each.status}</td> 
+            <td><button class="view-details">View</button></td>
+            </tr>`;
+        newrows += newRow;
+        }
+        
+    });
+    rows.innerHTML = newrows;
+});
+
+
+const popup = document.getElementById('popup');
+const popupDetails = document.getElementById('popup-details');
+const closeBtn = document.getElementById('close-btn');
+
+// Attaching the event listener to the table body
+document.querySelector(".complaint-list .main-table .body").addEventListener("click", async (event) => {
+    if (event.target.classList.contains("view-details")) {
+        const row = event.target.closest("tr");
+
+        const cid = row.cells[0].innerText;
+        const complaintInfo = await getComplaintDetails(cid);
+         
+
+        const imageButton = complaintInfo.imageURL
+            ? `<button id='open-popup' class='image-view'>View Image</button>`
+            : `<button id='open-popup' class='image-view' disabled>No Image</button>`;
+
+        popupDetails.innerHTML = `
+            <strong>Complaint ID: </strong> ${cid}<br>
+            <strong>Email: </strong> ${complaintInfo.userEmail}<br>
+            <strong>Category: </strong> ${complaintInfo.category}<br>
+            <strong>Title: </strong> ${complaintInfo.title}<br>
+            <strong>Description: </strong>${complaintInfo.description}<br>
+            <strong>Date: </strong>${complaintInfo.date}<br>
+            <strong>Attachments: </strong> ${imageButton}<br>
+            <strong>Status: </strong><span class="status-change">${complaintInfo.status}</span><br>
+        `;
+
+        popup.style.display = "flex";
+
+        // Handling Image Popup
+        const IMGpopup = document.getElementById("image-popup");
+        const popupImage = IMGpopup.querySelector("img");
+        const closePopupButton = document.getElementById("close-popup");
+        const openPopupButton = document.getElementById("open-popup");
+
+        if (complaintInfo.imageURL) {
+            openPopupButton.addEventListener("click", () => {
+                popupImage.src = complaintInfo.imageURL;
+                IMGpopup.style.display = "flex";
+            });
+
+            closePopupButton.addEventListener("click", () => {
+                IMGpopup.style.display = "none";
+                popupImage.src = "";
+            });
+
+            IMGpopup.addEventListener("click", (e) => {
+                if (e.target === IMGpopup) {
+                    IMGpopup.style.display = "none";
+                    popupImage.src = "";
+                }
+            });
+        }
+    }
+});
+
+
+// Close the popup when the close button 
+// is clicked or when clicked outside the popup
+closeBtn.addEventListener('click', () => {
+    popup.style.display = 'none';
+});
+
+popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+        popup.style.display = 'none';
+    }
+});
+
+
+//active button of complaints color change 
+document.addEventListener("DOMContentLoaded", () => {
+    const complaintButtons = document.querySelectorAll(".complaint");
+
+    complaintButtons.forEach(button => {
+        button.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            // Remove 'active' class from all buttons
+            complaintButtons.forEach(btn => btn.classList.remove("active"));
+
+            // Add 'active' class to the clicked button
+            this.classList.add("active");
+        });
+    });
 });

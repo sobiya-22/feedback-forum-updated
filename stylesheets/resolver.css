@@ -37,7 +37,7 @@ nav .logo {
 .sidebar{
     padding: 40px 0px;
     width: 320px;
-    height: 570px;
+    height: 550px;
     border-right:2px solid rgb(56, 4, 104);
     display: flex;
     padding: 20px;
@@ -95,9 +95,7 @@ nav .logo {
     text-align: center;
 }
 .complaint-box{
-    padding: 0px 30px;
-    /* display: flex;
-    flex-direction: column; */
+    padding: 0px 10px;
     border: 1px solid blueviolet;
     border-radius: 30px;
     background-color: rgb(234, 219, 246);

@@ -109,8 +109,11 @@ document.querySelector('.flip-card-front .login-btn').addEventListener('click', 
         if (loggedUser.role === 'Student' || loggedUser.role === 'Faculty') {
             window.location.href = './user.html';
         }
-        else if(loggedUser.role === 'Authority' || loggedUser.role === 'Admin'){
+        else if(loggedUser.role === 'Admin'){
             window.location.href = './resolver.html';
+        }
+        else if (loggedUser.role === 'Authority') {
+            window.location.href = './authorityPage.html';
         }
     } else {
         alert('Invalid Email or Password. Try Again!');
